@@ -9,7 +9,7 @@ public class MainPage {
 
     public MainPage(Browser browser) {
         this.browser = browser;
-        this.browser.openUrl(LOGIN_PAGE_URL);
+        this.browser.openUrl(MAIN_PAGE_URL);
     }
 
     public void openGroups() {
