@@ -41,7 +41,18 @@ public class ContactTest extends TestBase {
         contactHelper.initContactModify(contactHelper.randomContactIndex(contactsNumber));
         contactHelper.fillContactForm(new ContactData("ModifiedName", "Modified", null, null,
                 "4567", "239", null, "modifiedemail@mail.com", null, null, null, null, "modified address 2", "54321"));
-        contactHelper.submitContactEdit();
+        contactHelper.submitContactModify();
+        contactHelper.returnToHomePage();
+    }
+
+    @Test
+    public void deleteContactTest() {
+        NavigationHelper navigationHelper = app.getNavigationHelper();
+        navigationHelper.openMainPage();
+        ContactHelper contactHelper = new ContactHelper(app);
+        int contactsNumber = contactHelper.getNumberOfContacts();
+        contactHelper.initContactModify(contactHelper.randomContactIndex(contactsNumber));
+        contactHelper.submitContactDelete();
         contactHelper.returnToHomePage();
     }
 

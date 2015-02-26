@@ -1,7 +1,8 @@
 package pft.helper;
 
-import static pft.config.GroupsPageXpathes.*;
+import static pft.config.GroupsPageLocators.*;
 
+import org.openqa.selenium.By;
 import pft.data.GroupData;
 
 import java.util.Random;
@@ -48,7 +49,7 @@ public class GroupHelper extends BaseHelper {
     }
 
     private void selectGroupByIndex(int index) {
-        click(GROUP_CHECKBOX_XPATH + "[" + index + "]");
+        click(By.xpath(GROUP_CHECKBOX_XPATH + "[" + index + "]"));
     }
 
     public void initGroupModify(int index) {

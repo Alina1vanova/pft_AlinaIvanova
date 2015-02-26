@@ -1,8 +1,8 @@
 package pft.helper;
 
-import static pft.config.ContactPageXPathes.*;
-import static pft.config.GroupsPageXpathes.GROUP_CHECKBOX_XPATH;
+import static pft.config.ContactPageLocators.*;
 
+import org.openqa.selenium.By;
 import pft.data.ContactData;
 
 import java.util.Random;
@@ -35,18 +35,15 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void initContactModify(int index) {
-        click(CONTACT_TABLE_ROW+"["+index+"]"+CONTACT_EDIT_BUTTON_XPATH);
+        click(By.xpath(CONTACT_TABLE_ROW + "[" + index + "]" + CONTACT_EDIT_BUTTON_XPATH));
     }
 
     private void selectContactByIndex(int index) {
-        click(CONTACT_CHECKBOX_XPATH + "[" + index + "]");
+        click(By.xpath(CONTACT_CHECKBOX_XPATH + "[" + index + "]"));
     }
 
     public int getNumberOfContacts() {
-        int headerRow = 1;
-        int footerRow = 1;
-        int numberOfContacts = countElements(CONTACT_TABLE_ROW) - headerRow - footerRow;
-        return numberOfContacts;
+        return Integer.parseInt(getText(NUMBER_OF_CONTACTS));
     }
 
     public int randomContactIndex(int number) {
@@ -54,14 +51,22 @@ public class ContactHelper extends BaseHelper {
         int index = randomGenerator.nextInt(number) + 2;
         return index;
     }
+
     public void submitContactCreation() {
         click(SUBMIT_CONTACT_CREATION_BUTTON_XPATH);
     }
 
-    public void submitContactEdit() {
+    public void submitContactModify() {
         click(SUBMIT_CONTACT_MODIFICATION_BUTTON_XPATH);
     }
+
+    public void submitContactDelete() {
+        click(SUBMIT_CONTACT_DELETE_BUTTON_XPATH);
+    }
+
     public void returnToHomePage() {
         click(RETURN_TO_HOME_LINK_XPATH);
     }
+
+
 }
