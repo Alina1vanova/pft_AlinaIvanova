@@ -1,4 +1,4 @@
-package pft.helper;
+package pft.data;
 
 public class ContactData {
     private final String firstname;
