@@ -27,8 +27,9 @@ public abstract class BaseHelper {
         }
     }
 
-    public void selectByText(String xpath, String item) {
-        new Select(driver.findElement(By.xpath(xpath))).selectByVisibleText(item);
+    public void selectByText(String xpath, String text) {
+        if (text != null) {
+        new Select(driver.findElement(By.xpath(xpath))).selectByVisibleText(text);}
     }
 
     public int countElements(String xpath){

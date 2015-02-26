@@ -1,8 +1,11 @@
 package pft.helper;
 
 import static pft.config.ContactPageXPathes.*;
+import static pft.config.GroupsPageXpathes.GROUP_CHECKBOX_XPATH;
 
 import pft.data.ContactData;
+
+import java.util.Random;
 
 
 /**
@@ -31,10 +34,33 @@ public class ContactHelper extends BaseHelper {
         enterText(HOME2_INPUT, contactData.getPhone2());
     }
 
+    public void initContactModify(int index) {
+        click(CONTACT_TABLE_ROW+"["+index+"]"+CONTACT_EDIT_BUTTON_XPATH);
+    }
+
+    private void selectContactByIndex(int index) {
+        click(CONTACT_CHECKBOX_XPATH + "[" + index + "]");
+    }
+
+    public int getNumberOfContacts() {
+        int headerRow = 1;
+        int footerRow = 1;
+        int numberOfContacts = countElements(CONTACT_TABLE_ROW) - headerRow - footerRow;
+        return numberOfContacts;
+    }
+
+    public int randomContactIndex(int number) {
+        Random randomGenerator = new Random();
+        int index = randomGenerator.nextInt(number) + 2;
+        return index;
+    }
     public void submitContactCreation() {
         click(SUBMIT_CONTACT_CREATION_BUTTON_XPATH);
     }
 
+    public void submitContactEdit() {
+        click(SUBMIT_CONTACT_MODIFICATION_BUTTON_XPATH);
+    }
     public void returnToHomePage() {
         click(RETURN_TO_HOME_LINK_XPATH);
     }

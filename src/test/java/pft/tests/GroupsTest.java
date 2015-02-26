@@ -29,7 +29,7 @@ public class GroupsTest extends TestBase {
     }
 
     @Test
-    public void deleteGroup() {
+    public void deleteGroupTest() {
         NavigationHelper navigationHelper = app.getNavigationHelper();
         navigationHelper.openMainPage();
         navigationHelper.openGroups();
@@ -40,7 +40,7 @@ public class GroupsTest extends TestBase {
     }
 
     @Test
-    public void modifyGroup() {
+    public void modifyGroupTest() {
         NavigationHelper navigationHelper = app.getNavigationHelper();
         navigationHelper.openMainPage();
         navigationHelper.openGroups();
