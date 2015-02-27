@@ -42,7 +42,7 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath(CONTACT_CHECKBOX_XPATH + "[" + index + "]"));
     }
 
-    public int getNumberOfContacts() {
+    public int countContacts() {
         return Integer.parseInt(getText(NUMBER_OF_CONTACTS));
     }
 

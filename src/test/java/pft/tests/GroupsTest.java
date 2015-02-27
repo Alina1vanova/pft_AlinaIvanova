@@ -34,7 +34,7 @@ public class GroupsTest extends TestBase {
         navigationHelper.openMainPage();
         navigationHelper.openGroups();
         GroupHelper groupHelper = app.getGroupHelper();
-        int groupsNumber = groupHelper.getNumberOfGroups();
+        int groupsNumber = groupHelper.countGroups();
         groupHelper.deleteGroup(groupHelper.randomGroupIndex(groupsNumber));
         groupHelper.returnToGroupsPage();
     }
@@ -46,7 +46,7 @@ public class GroupsTest extends TestBase {
         navigationHelper.openGroups();
         GroupData group = new GroupData("modifiedGroup", null, null);
         GroupHelper groupHelper = app.getGroupHelper();
-        int groupsNumber = groupHelper.getNumberOfGroups();
+        int groupsNumber = groupHelper.countGroups();
         groupHelper.initGroupModify(groupHelper.randomGroupIndex(groupsNumber));
         groupHelper.fillGroupForm(group);
         groupHelper.submitGroupModification();

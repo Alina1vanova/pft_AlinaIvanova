@@ -37,7 +37,7 @@ public class ContactTest extends TestBase {
         NavigationHelper navigationHelper = app.getNavigationHelper();
         navigationHelper.openMainPage();
         ContactHelper contactHelper = new ContactHelper(app);
-        int contactsNumber = contactHelper.getNumberOfContacts();
+        int contactsNumber = contactHelper.countContacts();
         contactHelper.initContactModify(contactHelper.randomContactIndex(contactsNumber));
         contactHelper.fillContactForm(new ContactData("ModifiedName", "Modified", null, null,
                 "4567", "239", null, "modifiedemail@mail.com", null, null, null, null, "modified address 2", "54321"));
@@ -50,7 +50,7 @@ public class ContactTest extends TestBase {
         NavigationHelper navigationHelper = app.getNavigationHelper();
         navigationHelper.openMainPage();
         ContactHelper contactHelper = new ContactHelper(app);
-        int contactsNumber = contactHelper.getNumberOfContacts();
+        int contactsNumber = contactHelper.countContacts();
         contactHelper.initContactModify(contactHelper.randomContactIndex(contactsNumber));
         contactHelper.submitContactDelete();
         contactHelper.returnToHomePage();

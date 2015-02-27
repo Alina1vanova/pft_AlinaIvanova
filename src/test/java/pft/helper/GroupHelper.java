@@ -44,7 +44,7 @@ public class GroupHelper extends BaseHelper {
         return index;
     }
 
-    public int getNumberOfGroups() {
+    public int countGroups() {
         return countElements(GROUP_CHECKBOX_XPATH);
     }
 
