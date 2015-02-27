@@ -3,8 +3,11 @@ package pft.helper;
 import static pft.config.GroupsPageLocators.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pft.data.GroupData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GroupHelper extends BaseHelper {
@@ -32,9 +35,8 @@ public class GroupHelper extends BaseHelper {
         click(RETURN_TO_GROUPS_LINK_XPATH);
     }
 
-
     public void deleteGroup(int index) {
-        selectGroupByIndex(index);
+        selectGroupByIndex(index-1);
         click(GROUP_DELETE_BUTTON);
     }
 
@@ -52,6 +54,19 @@ public class GroupHelper extends BaseHelper {
         click(By.xpath(GROUP_CHECKBOX_XPATH + "[" + index + "]"));
     }
 
+    public List<GroupData> getGroups() {
+        List<GroupData> groups = new ArrayList<GroupData>();
+        List<WebElement> checkboxes = driver.findElements(By.xpath(GROUP_CHECKBOX_XPATH));
+        for (WebElement checkbox : checkboxes){
+            GroupData group = new GroupData();
+            String title = checkbox.getAttribute("title");
+            group.setName(title.substring("Select (".length(),title.length()-")".length()));
+            groups.add(group);
+        }
+
+        return groups;
+    }
+
     public void initGroupModify(int index) {
         selectGroupByIndex(index);
         click(GROUP_EDIT_BUTTON);
@@ -61,4 +76,8 @@ public class GroupHelper extends BaseHelper {
         click(SUBMIT_GROUP_MODIFICATION_BUTTON_XPATH);
     }
 
+
+    public String getCurrentName() {
+        return driver.findElement(GROUP_NAME_INPUT).getAttribute("value");
+    }
 }
