@@ -26,15 +26,15 @@ public class GroupTestData {
 
     private static String generateRandomString() {
         Random rnd = new Random();
-        return null;
-  /*      if (rnd.nextInt(5) == 0) {
+
+        if (rnd.nextInt(5) == 0) {
             return "";
         }
-*//*        else if (rnd.nextInt(5) == 1) {
+        else if (rnd.nextInt(5) == 1) {
             return null;
-        } *//*
+        }
         else {
             return "test" + rnd.nextInt();
-        }*/
+        }
     }
 }

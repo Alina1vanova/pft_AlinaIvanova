@@ -64,7 +64,7 @@ public class GroupHelper extends BaseHelper {
 
     public int randomIndex(int boundary) {
         Random rnd = new Random();
-        return rnd.nextInt(boundary - 1);
+        return Math.abs(rnd.nextInt(boundary - 1));
     }
 
     private void selectGroupByIndex(int index) {
@@ -83,10 +83,12 @@ public class GroupHelper extends BaseHelper {
         return driver.findElement(GROUP_FOOTER_INPUT).getText();
     }
 
-    public void checkNullValue(GroupData group) {
-        if (group.getName() == null) {
+    public GroupData checkNullValue(GroupData testGroup) {
+        GroupData group = new GroupData();
+        if (testGroup.getName() == null) {
             group.setName(getCurrentName());
-            System.out.println("Name is " + getCurrentName());
+          //  System.out.println("Name is " + getCurrentName());
         }
+        return group;
     }
 }

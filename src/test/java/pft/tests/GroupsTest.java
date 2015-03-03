@@ -23,13 +23,13 @@ public class GroupsTest extends TestBase {
 
         groupHelper.initGroupCreation();
         groupHelper.fillGroupForm(group);
-        groupHelper.checkNullValue(group);
+        GroupData newGroup = groupHelper.checkNullValue(group);
         groupHelper.submitGroupCreation();
         groupHelper.returnToGroupsPage();
 
         List<GroupData> newList = groupHelper.getGroups();
 
-        oldList.add(group);
+        oldList.add(newGroup);
         Collections.sort(oldList);
 
         assertEquals(newList, oldList);
@@ -67,7 +67,7 @@ public class GroupsTest extends TestBase {
         int index = groupHelper.randomIndex(oldList.size());
         groupHelper.initGroupModify(index);
         groupHelper.fillGroupForm(group);
-        groupHelper.checkNullValue(group);
+        GroupData newGroup = groupHelper.checkNullValue(group);
 
         groupHelper.submitGroupModification();
         groupHelper.returnToGroupsPage();
@@ -75,7 +75,7 @@ public class GroupsTest extends TestBase {
         List<GroupData> newList = groupHelper.getGroups();
 
         oldList.remove(index);
-        oldList.add(group);
+        oldList.add(newGroup);
         Collections.sort(oldList);
 
         assertEquals(newList, oldList);
