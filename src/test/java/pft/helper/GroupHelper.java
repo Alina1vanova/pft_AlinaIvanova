@@ -36,31 +36,17 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void deleteGroup(int index) {
-        selectGroupByIndex(index-1);
+        selectGroupByIndex(index + 1);
         click(GROUP_DELETE_BUTTON);
-    }
-
-    public int randomGroupIndex(int number) {
-        Random randomGenerator = new Random();
-        int index = randomGenerator.nextInt(number) + 1;
-        return index;
-    }
-
-    public int countGroups() {
-        return countElements(GROUP_CHECKBOX_XPATH);
-    }
-
-    private void selectGroupByIndex(int index) {
-        click(By.xpath(GROUP_CHECKBOX_XPATH + "[" + index + "]"));
     }
 
     public List<GroupData> getGroups() {
         List<GroupData> groups = new ArrayList<GroupData>();
         List<WebElement> checkboxes = driver.findElements(By.xpath(GROUP_CHECKBOX_XPATH));
-        for (WebElement checkbox : checkboxes){
+        for (WebElement checkbox : checkboxes) {
             GroupData group = new GroupData();
             String title = checkbox.getAttribute("title");
-            group.setName(title.substring("Select (".length(),title.length()-")".length()));
+            group.setName(title.substring("Select (".length(), title.length() - ")".length()));
             groups.add(group);
         }
 
@@ -68,7 +54,7 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void initGroupModify(int index) {
-        selectGroupByIndex(index);
+        selectGroupByIndex(index + 1);
         click(GROUP_EDIT_BUTTON);
     }
 
@@ -76,8 +62,31 @@ public class GroupHelper extends BaseHelper {
         click(SUBMIT_GROUP_MODIFICATION_BUTTON_XPATH);
     }
 
+    public int randomIndex(int boundary) {
+        Random rnd = new Random();
+        return rnd.nextInt(boundary - 1);
+    }
 
-    public String getCurrentName() {
+    private void selectGroupByIndex(int index) {
+        click(By.xpath(GROUP_CHECKBOX_XPATH + "[" + index + "]"));
+    }
+
+    private String getCurrentName() {
         return driver.findElement(GROUP_NAME_INPUT).getAttribute("value");
+    }
+
+    private String getCurrentHeader() {
+        return driver.findElement(GROUP_HEADER_INPUT).getText();
+    }
+
+    private String getCurrentFooter() {
+        return driver.findElement(GROUP_FOOTER_INPUT).getText();
+    }
+
+    public void checkNullValue(GroupData group) {
+        if (group.getName() == null) {
+            group.setName(getCurrentName());
+            System.out.println("Name is " + getCurrentName());
+        }
     }
 }

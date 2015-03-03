@@ -13,7 +13,7 @@ import java.util.*;
 public class GroupsTest extends TestBase {
 
     @Test(dataProvider = "randomValidGroupData", dataProviderClass = GroupTestData.class)
-    public void groupCreationWithValidDataTest(GroupData groupData) {
+    public void groupCreationWithValidDataTest(GroupData group) {
         NavigationHelper navigationHelper = app.getNavigationHelper();
         navigationHelper.openMainPage();
         navigationHelper.openGroups();
@@ -22,17 +22,16 @@ public class GroupsTest extends TestBase {
         List<GroupData> oldList = groupHelper.getGroups();
 
         groupHelper.initGroupCreation();
-        groupHelper.fillGroupForm(groupData);
-        if (groupData.getName() == null){
-            groupData.setName(groupHelper.getCurrentName());
-        }
+        groupHelper.fillGroupForm(group);
+        groupHelper.checkNullValue(group);
         groupHelper.submitGroupCreation();
         groupHelper.returnToGroupsPage();
 
         List<GroupData> newList = groupHelper.getGroups();
 
-        oldList.add(groupData);
+        oldList.add(group);
         Collections.sort(oldList);
+
         assertEquals(newList, oldList);
     }
 
@@ -45,11 +44,7 @@ public class GroupsTest extends TestBase {
 
         List<GroupData> oldList = groupHelper.getGroups();
 
-    //    Random rnd = new Random();
-     //   int index = rnd.nextInt(oldList.size()-1);
-
-     int groupsNumber = groupHelper.countGroups();
-      int index = groupHelper.randomGroupIndex(groupsNumber);
+        int index = groupHelper.randomIndex(oldList.size());
         groupHelper.deleteGroup(index);
         groupHelper.returnToGroupsPage();
 
@@ -61,31 +56,27 @@ public class GroupsTest extends TestBase {
     }
 
     @Test(dataProvider = "randomValidGroupData", dataProviderClass = GroupTestData.class)
-    public void modifyGroupTest(GroupData groupData) {
+    public void modifyGroupTest(GroupData group) {
         NavigationHelper navigationHelper = app.getNavigationHelper();
         navigationHelper.openMainPage();
         navigationHelper.openGroups();
         GroupHelper groupHelper = app.getGroupHelper();
 
         List<GroupData> oldList = groupHelper.getGroups();
-       // Random rnd = new Random();
-       // int index = rnd.nextInt(oldList.size()-1);
 
-        int groupsNumber = oldList.size();
-        int index = groupHelper.randomGroupIndex(groupsNumber);
+        int index = groupHelper.randomIndex(oldList.size());
         groupHelper.initGroupModify(index);
-        groupHelper.fillGroupForm(groupData);
+        groupHelper.fillGroupForm(group);
+        groupHelper.checkNullValue(group);
+
         groupHelper.submitGroupModification();
         groupHelper.returnToGroupsPage();
 
         List<GroupData> newList = groupHelper.getGroups();
 
         oldList.remove(index);
-        oldList.add(groupData);
+        oldList.add(group);
         Collections.sort(oldList);
-
-        System.out.println(newList.toString());
-        System.out.println(oldList.toString());
 
         assertEquals(newList, oldList);
     }
