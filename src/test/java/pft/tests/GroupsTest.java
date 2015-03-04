@@ -68,7 +68,6 @@ public class GroupsTest extends TestBase {
         groupHelper.initGroupModify(index);
         groupHelper.fillGroupForm(group);
         GroupData newGroup = groupHelper.checkNullValue(group);
-
         groupHelper.submitGroupModification();
         groupHelper.returnToGroupsPage();
 

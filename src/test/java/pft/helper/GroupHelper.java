@@ -87,7 +87,8 @@ public class GroupHelper extends BaseHelper {
         GroupData group = new GroupData();
         if (testGroup.getName() == null) {
             group.setName(getCurrentName());
-          //  System.out.println("Name is " + getCurrentName());
+        } else {
+            group.setName(testGroup.getName());
         }
         return group;
     }

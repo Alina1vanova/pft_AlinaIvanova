@@ -14,7 +14,7 @@ public class GroupTestData {
     @DataProvider(name = "randomValidGroupData")
     private static Iterator<Object[]> randomValidGroupData() {
         List<Object[]> list = new ArrayList<Object[]>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             GroupData group = new GroupData();
             group.setName(generateRandomString());
             group.setHeader(generateRandomString());
