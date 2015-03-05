@@ -3,9 +3,6 @@ package pft.helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import pft.helper.ContactHelper;
-import pft.helper.GroupHelper;
-import pft.helper.NavigationHelper;
 
 import java.util.concurrent.TimeUnit;
 

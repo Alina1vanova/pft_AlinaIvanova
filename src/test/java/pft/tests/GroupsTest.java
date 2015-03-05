@@ -26,10 +26,9 @@ public class GroupsTest extends TestBase {
         GroupData newGroup = groupHelper.checkNullValue(group);
         groupHelper.submitGroupCreation();
         groupHelper.returnToGroupsPage();
+        oldList.add(newGroup);
 
         List<GroupData> newList = groupHelper.getGroups();
-
-        oldList.add(newGroup);
         Collections.sort(oldList);
 
         assertEquals(newList, oldList);
@@ -43,15 +42,16 @@ public class GroupsTest extends TestBase {
         GroupHelper groupHelper = app.getGroupHelper();
 
         List<GroupData> oldList = groupHelper.getGroups();
-
-        int index = groupHelper.randomIndex(oldList.size());
-        groupHelper.deleteGroup(index);
-        groupHelper.returnToGroupsPage();
+        if (oldList.size() > 1) {
+            int index = groupHelper.randomIndex(oldList.size());
+            groupHelper.deleteGroup(index);
+            groupHelper.returnToGroupsPage();
+            oldList.remove(index);
+        }
 
         List<GroupData> newList = groupHelper.getGroups();
-
-        oldList.remove(index);
         Collections.sort(oldList);
+
         assertEquals(newList, oldList);
     }
 
@@ -64,17 +64,18 @@ public class GroupsTest extends TestBase {
 
         List<GroupData> oldList = groupHelper.getGroups();
 
-        int index = groupHelper.randomIndex(oldList.size());
-        groupHelper.initGroupModify(index);
-        groupHelper.fillGroupForm(group);
-        GroupData newGroup = groupHelper.checkNullValue(group);
-        groupHelper.submitGroupModification();
-        groupHelper.returnToGroupsPage();
+        if (oldList.size() > 1) {
+            int index = groupHelper.randomIndex(oldList.size());
+            groupHelper.initGroupModify(index);
+            groupHelper.fillGroupForm(group);
+            GroupData newGroup = groupHelper.checkNullValue(group);
+            groupHelper.submitGroupModification();
+            groupHelper.returnToGroupsPage();
 
+            oldList.remove(index);
+            oldList.add(newGroup);
+        }
         List<GroupData> newList = groupHelper.getGroups();
-
-        oldList.remove(index);
-        oldList.add(newGroup);
         Collections.sort(oldList);
 
         assertEquals(newList, oldList);

@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
  */
 
 public interface ContactPageLocators {
-    By FIRST_NAME_INPUT = new By.ByXPath("//input[@name='firstname']");
-    By LAST_NAME_INPUT = new By.ByXPath("//input[@name='lastname']");
+    By FIRST_NAME_INPUT = new By.ByXPath("//input[@name='lastname']");
+    By LAST_NAME_INPUT = new By.ByXPath("//input[@name='firstname']");
     By ADDRESS_INPUT = new By.ByXPath("//textarea[@name='address']");
     By HOME_INPUT = new By.ByXPath("//input[@name='home']");
     By MOBILE_INPUT = new By.ByXPath("//input[@name='mobile']");
