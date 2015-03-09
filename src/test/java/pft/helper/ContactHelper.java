@@ -29,16 +29,16 @@ public class ContactHelper extends BaseHelper {
         enterText(WORK_INPUT, contactData.work);
         enterText(EMAIL_INPUT, contactData.email);
         enterText(EMAIL2_INPUT, contactData.email2);
-        selectByText(BDAY_SELECT_XPATH, contactData.bday);
-        selectByText(BMONTH_SELECT_XPATH, contactData.bmonth);
-        enterText(BYEAR_INPUT, contactData.year);
+        selectByText(BDAY_SELECT_XPATH, Integer.toString(contactData.bday));
+        selectByIndex(BMONTH_SELECT_XPATH, contactData.bmonth);
+        enterText(BYEAR_INPUT, Integer.toString(contactData.year));
 //      selectByText(GROUP_SELECT_XPATH, contactData.group);
         enterText(ADDRESS2_INPUT, contactData.address2);
         enterText(HOME2_INPUT, contactData.phone2);
     }
 
     public void initContactModify(int index) {
-        click(By.xpath(CONTACT_TABLE_ROW + "[" + (index+1) + "]" + CONTACT_EDIT_BUTTON_XPATH));
+        click(By.xpath(CONTACT_TABLE_ROW + "[" + (index + 1) + "]" + CONTACT_EDIT_BUTTON_XPATH));
     }
 
     private void selectContactByIndex(int index) {
@@ -74,14 +74,12 @@ public class ContactHelper extends BaseHelper {
 
     public List<ContactData> getContacts() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> checkboxes = driver.findElements(By.xpath(CONTACT_CHECKBOX_XPATH));
-        for (WebElement checkbox : checkboxes) {
-            int index = checkboxes.indexOf(checkbox)+2;
-          //  System.out.println(index +  " index");
-            ContactData contact = new ContactData();
-            String alt = checkbox.getAttribute("alt");
-            //tr[8]/td[2]
-            contact.firstname = driver.findElement(By.xpath("//tr["+index+"]/td[2]")).getText();
+        List<WebElement> rows = getContactRows();
+        for (WebElement row : rows) {
+            ContactData contact = new ContactData()
+                    .setFirstname(row.findElement(By.xpath(".//td[2]")).getText())
+                    .setLastname(row.findElement(By.xpath(".//td[3]")).getText());
+
             contacts.add(contact);
         }
 
@@ -100,10 +98,15 @@ public class ContactHelper extends BaseHelper {
 
     public int randomIndex(int boundary) {
         Random rnd = new Random();
-        return Math.abs(rnd.nextInt(boundary)+1);
+        return Math.abs(rnd.nextInt(boundary) + 1);
     }
 
     public String getCurrentFirstName() {
         return driver.findElement(FIRST_NAME_INPUT).getAttribute("value");
+    }
+
+    public List<WebElement> getContactRows() {
+        List<WebElement> contactRows = driver.findElements(CONTACT_TABLE_ROWS);
+        return contactRows;
     }
 }

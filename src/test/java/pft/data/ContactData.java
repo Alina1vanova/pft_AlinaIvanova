@@ -7,6 +7,20 @@ import java.util.List;
 
 public class ContactData implements Comparable<ContactData> {
 
+    public ContactData ContactData() {
+        return this;
+    }
+
+    public ContactData setFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactData setLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
     public String firstname;
     public String lastname;
     public String address;
@@ -15,9 +29,9 @@ public class ContactData implements Comparable<ContactData> {
     public String work;
     public String email;
     public String email2;
-    public String bday;
-    public String bmonth;
-    public String year;
+    public int bday;
+    public int bmonth;
+    public int year;
     public String group;
     public String address2;
     public String phone2;

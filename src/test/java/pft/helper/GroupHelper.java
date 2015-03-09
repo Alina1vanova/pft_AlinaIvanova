@@ -17,49 +17,55 @@ public class GroupHelper extends BaseHelper {
         super(manager);
     }
 
-    public void initGroupCreation() {
+    public GroupHelper initGroupCreation() {
         click(NEW_GROUP_BUTTON_XPATH);
+        return this;
     }
 
-    public void fillGroupForm(GroupData groupData) {
+    public GroupHelper fillGroupForm(GroupData groupData) {
         enterText(GROUP_NAME_INPUT, groupData.getName());
         enterText(GROUP_HEADER_INPUT, groupData.getHeader());
         enterText(GROUP_FOOTER_INPUT, groupData.getFooter());
+        return this;
     }
 
-    public void submitGroupCreation() {
+    public GroupHelper submitGroupCreation() {
         click(SUBMIT_GROUP_CREATION_BUTTON_XPATH);
+        return this;
     }
 
-    public void returnToGroupsPage() {
+    public GroupHelper returnToGroupsPage() {
         click(RETURN_TO_GROUPS_LINK_XPATH);
+        return this;
     }
 
-    public void deleteGroup(int index) {
+    public GroupHelper deleteGroup(int index) {
         selectGroupByIndex(index + 1);
         click(GROUP_DELETE_BUTTON);
+        return this;
     }
 
     public List<GroupData> getGroups() {
         List<GroupData> groups = new ArrayList<GroupData>();
         List<WebElement> checkboxes = driver.findElements(By.xpath(GROUP_CHECKBOX_XPATH));
         for (WebElement checkbox : checkboxes) {
-            GroupData group = new GroupData();
             String title = checkbox.getAttribute("title");
-            group.setName(title.substring("Select (".length(), title.length() - ")".length()));
-            groups.add(group);
+            String name = title.substring("Select (".length(), title.length() - ")".length());
+            groups.add(new GroupData().withName(name));
         }
 
         return groups;
     }
 
-    public void initGroupModify(int index) {
+    public GroupHelper initGroupModify(int index) {
         selectGroupByIndex(index + 1);
         click(GROUP_EDIT_BUTTON);
+        return this;
     }
 
-    public void submitGroupModification() {
+    public GroupHelper submitGroupModification() {
         click(SUBMIT_GROUP_MODIFICATION_BUTTON_XPATH);
+        return this;
     }
 
     public int randomIndex(int boundary) {

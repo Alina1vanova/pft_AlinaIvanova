@@ -49,7 +49,7 @@ public class ContactTest extends TestBase {
         navigationHelper.openMainPage();
 
         List<ContactData> oldList = contactHelper.getContacts();
-        if (oldList.size() > 1) {
+        if (oldList.size() > 0) {
             int index = contactHelper.randomIndex(oldList.size());
             contactHelper.initContactModify(index);
             contactHelper.fillContactForm(contact);
@@ -73,7 +73,7 @@ public class ContactTest extends TestBase {
 
         List<ContactData> oldList = contactHelper.getContacts();
 
-        if (oldList.size() > 1) {
+        if (oldList.size() > 0) {
             int index = contactHelper.randomIndex(oldList.size());
             System.out.println(oldList.size() + " size");
             contactHelper.initContactModify(index);

@@ -14,11 +14,12 @@ public class GroupTestData {
     @DataProvider(name = "randomValidGroupData")
     private static Iterator<Object[]> randomValidGroupData() {
         List<Object[]> list = new ArrayList<Object[]>();
-        for (int i = 0; i < 5; i++) {
-            GroupData group = new GroupData();
-            group.setName(generateRandomString());
-            group.setHeader(generateRandomString());
-            group.setFooter(generateRandomString());
+        for (int i = 0; i < 3; i++) {
+            GroupData group = new GroupData()
+                    .withName(generateRandomString())
+                    .withHeader(generateRandomString())
+                    .withFooter(generateRandomString());
+
             list.add(new Object[]{group});
         }
         return list.iterator();
@@ -29,12 +30,12 @@ public class GroupTestData {
 
         if (rnd.nextInt(5) == 0) {
             return "";
-        }
-        else if (rnd.nextInt(5) == 1) {
+        } else if (rnd.nextInt(5) == 1) {
             return null;
-        }
-        else {
+        } else {
             return "test" + rnd.nextInt();
         }
     }
+
+
 }

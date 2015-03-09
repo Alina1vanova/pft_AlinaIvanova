@@ -2,6 +2,9 @@ package pft.data;
 
 import org.testng.annotations.DataProvider;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static pft.config.Constants.*;
@@ -13,9 +16,9 @@ public class ContactTestData {
 
 
     @DataProvider(name = "randomValidContactData")
-    private static Iterator<Object[]> randomValidContactData() {
+    private static Iterator<Object[]> randomValidContactData() throws ParseException {
         List<Object[]> list = new ArrayList<Object[]>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             ContactData contact = new ContactData();
             contact.firstname = generateRandomString();
             contact.lastname = generateRandomString();
@@ -25,11 +28,10 @@ public class ContactTestData {
             contact.work = generateRandomNumber(Integer.MAX_VALUE);
             contact.email = generateRandomString();
             contact.email2 = generateRandomString();
-            contact.bday = generateRandomNumber(31);
-            if (contact.bday == "") contact.bday = null;
-            int randomMonth = generateRandomMonth(MONTHS.size());
-            contact.bmonth = MONTHS.get(randomMonth);
-            contact.year = generateRandomNumber(100);
+            Calendar randomDate = generateDate();
+            contact.bday = randomDate.get(Calendar.DAY_OF_MONTH);
+            contact.bmonth = randomDate.get(Calendar.MONTH) + 1;
+            contact.year = randomDate.get(Calendar.YEAR);
             contact.address2 = generateRandomString();
             contact.phone2 = generateRandomNumber(Integer.MAX_VALUE);
 
@@ -76,6 +78,19 @@ public class ContactTestData {
             return Integer.toString(rnd.nextInt(boundary) + 1);
         }
 
+    }
+
+    public static Calendar generateDate() throws ParseException {
+        int randomYear = generateIntBetween(1900, 2015);
+        int randomDay = generateIntBetween(1, 365);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, randomYear);
+        calendar.set(Calendar.DAY_OF_YEAR, randomDay);
+        return calendar;
+    }
+
+    private static int generateIntBetween(int start, int end) {
+        return start + (int) Math.round(Math.random() * (end - start));
     }
 
 }

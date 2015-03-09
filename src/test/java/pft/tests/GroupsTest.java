@@ -21,11 +21,16 @@ public class GroupsTest extends TestBase {
 
         List<GroupData> oldList = groupHelper.getGroups();
 
-        groupHelper.initGroupCreation();
-        groupHelper.fillGroupForm(group);
+        groupHelper
+                .initGroupCreation()
+                .fillGroupForm(group);
+
         GroupData newGroup = groupHelper.checkNullValue(group);
-        groupHelper.submitGroupCreation();
-        groupHelper.returnToGroupsPage();
+
+        groupHelper
+                .submitGroupCreation()
+                .returnToGroupsPage();
+
         oldList.add(newGroup);
 
         List<GroupData> newList = groupHelper.getGroups();
@@ -42,10 +47,11 @@ public class GroupsTest extends TestBase {
         GroupHelper groupHelper = app.getGroupHelper();
 
         List<GroupData> oldList = groupHelper.getGroups();
-        if (oldList.size() > 1) {
+        if (oldList.size() > 0) {
             int index = groupHelper.randomIndex(oldList.size());
-            groupHelper.deleteGroup(index);
-            groupHelper.returnToGroupsPage();
+            groupHelper
+                    .deleteGroup(index)
+                    .returnToGroupsPage();
             oldList.remove(index);
         }
 
@@ -63,14 +69,18 @@ public class GroupsTest extends TestBase {
         GroupHelper groupHelper = app.getGroupHelper();
 
         List<GroupData> oldList = groupHelper.getGroups();
-
-        if (oldList.size() > 1) {
+        System.out.println();
+        if (oldList.size() > 0) {
             int index = groupHelper.randomIndex(oldList.size());
-            groupHelper.initGroupModify(index);
-            groupHelper.fillGroupForm(group);
+            groupHelper
+                    .initGroupModify(index)
+                    .fillGroupForm(group);
+
             GroupData newGroup = groupHelper.checkNullValue(group);
-            groupHelper.submitGroupModification();
-            groupHelper.returnToGroupsPage();
+
+            groupHelper
+                    .submitGroupModification()
+                    .returnToGroupsPage();
 
             oldList.remove(index);
             oldList.add(newGroup);

@@ -27,6 +27,11 @@ public abstract class BaseHelper {
         }
     }
 
+    public void selectByIndex(By by, int index) {
+        new Select(driver.findElement(by)).selectByIndex(index);
+    }
+
+
     public void selectByText(By by, String text) {
         if (text != null) {
             new Select(driver.findElement(by)).selectByVisibleText(text);
