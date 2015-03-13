@@ -3,7 +3,7 @@ package pft.config;
 import org.openqa.selenium.By;
 
 public interface GroupsPageLocators {
-    By NEW_GROUP_BUTTON_XPATH = new By.ByXPath("//input[@name='new']");
+    By NEW_GROUP_BUTTON = new By.ByXPath("//input[@name='new']");
     By GROUP_NAME_INPUT = new By.ByXPath("//input[@name='group_name']");
     By GROUP_HEADER_INPUT = new By.ByXPath("//textarea[@name='group_header']");
     By GROUP_FOOTER_INPUT = new By.ByXPath("//textarea[@name='group_footer']");
@@ -13,5 +13,6 @@ public interface GroupsPageLocators {
     By GROUP_EDIT_BUTTON = new By.ByXPath("//input[@name='edit']");
     By SUBMIT_GROUP_MODIFICATION_BUTTON_XPATH = new By.ByXPath("//input[@name='update']");
     String GROUP_CHECKBOX_XPATH = "//input[@name='selected[]']";
+
 
 }

@@ -5,56 +5,71 @@ import static pft.config.GroupsPageLocators.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pft.data.GroupData;
-
-import java.util.ArrayList;
+import pft.utils.SortedListOf;
 import java.util.List;
 import java.util.Random;
 
 public class GroupHelper extends BaseHelper {
 
+    private SortedListOf<GroupData> cachedGroups;
 
     public GroupHelper(ApplicationManager manager) {
         super(manager);
     }
 
-    public GroupHelper initGroupCreation() {
-        click(NEW_GROUP_BUTTON_XPATH);
-        return this;
+    public GroupData createGroup(GroupData group) {
+        manager.navigateTo().groupsPage();
+        initGroupCreation();
+        fillGroupForm(group);
+        GroupData newGroup = checkNullValue(group);
+        submitGroupCreation();
+        returnToGroupsPage();
+        rebuildCache();
+        return newGroup;
     }
 
-    public GroupHelper fillGroupForm(GroupData groupData) {
-        enterText(GROUP_NAME_INPUT, groupData.getName());
-        enterText(GROUP_HEADER_INPUT, groupData.getHeader());
-        enterText(GROUP_FOOTER_INPUT, groupData.getFooter());
-        return this;
-    }
-
-    public GroupHelper submitGroupCreation() {
-        click(SUBMIT_GROUP_CREATION_BUTTON_XPATH);
-        return this;
-    }
-
-    public GroupHelper returnToGroupsPage() {
-        click(RETURN_TO_GROUPS_LINK_XPATH);
-        return this;
+    public GroupData modifyGroup(int index, GroupData group) {
+        manager.navigateTo().groupsPage();
+        initGroupModify(index);
+        fillGroupForm(group);
+        GroupData newGroup = checkNullValue(group);
+        submitGroupModification();
+        returnToGroupsPage();
+        rebuildCache();
+        return newGroup;
     }
 
     public GroupHelper deleteGroup(int index) {
         selectGroupByIndex(index + 1);
-        click(GROUP_DELETE_BUTTON);
+        submitGroupDeletion();
+        returnToGroupsPage();
+        rebuildCache();
         return this;
     }
 
-    public List<GroupData> getGroups() {
-        List<GroupData> groups = new ArrayList<GroupData>();
+
+
+    public SortedListOf<GroupData> getGroups() {
+        if (cachedGroups == null) {
+            rebuildCache();
+        }
+        return cachedGroups;
+    }
+
+    private void rebuildCache() {
+        cachedGroups = new SortedListOf<GroupData>();
+        manager.navigateTo().groupsPage();
         List<WebElement> checkboxes = driver.findElements(By.xpath(GROUP_CHECKBOX_XPATH));
         for (WebElement checkbox : checkboxes) {
             String title = checkbox.getAttribute("title");
             String name = title.substring("Select (".length(), title.length() - ")".length());
-            groups.add(new GroupData().withName(name));
+            cachedGroups.add(new GroupData().withName(name));
         }
+    }
 
-        return groups;
+    public GroupHelper initGroupCreation() {
+        click(NEW_GROUP_BUTTON);
+        return this;
     }
 
     public GroupHelper initGroupModify(int index) {
@@ -63,8 +78,37 @@ public class GroupHelper extends BaseHelper {
         return this;
     }
 
+    public void fillGroupForm(GroupData groupData) {
+        enterText(GROUP_NAME_INPUT, groupData.getName());
+        enterText(GROUP_HEADER_INPUT, groupData.getHeader());
+        enterText(GROUP_FOOTER_INPUT, groupData.getFooter());
+    }
+
+    public GroupData checkNullValue(GroupData testGroup) {
+        GroupData group = new GroupData();
+        if (testGroup.getName() == null) {
+            group.setName(getCurrentName());
+        } else {
+            group.setName(testGroup.getName());
+        }
+        return group;
+    }
+
+    public GroupHelper submitGroupCreation() {
+        click(SUBMIT_GROUP_CREATION_BUTTON_XPATH);
+        cachedGroups = null;
+        return this;
+    }
+
     public GroupHelper submitGroupModification() {
         click(SUBMIT_GROUP_MODIFICATION_BUTTON_XPATH);
+        cachedGroups = null;
+        return this;
+    }
+
+    public GroupHelper submitGroupDeletion() {
+        click(GROUP_DELETE_BUTTON);
+        cachedGroups = null;
         return this;
     }
 
@@ -75,6 +119,11 @@ public class GroupHelper extends BaseHelper {
 
     private void selectGroupByIndex(int index) {
         click(By.xpath(GROUP_CHECKBOX_XPATH + "[" + index + "]"));
+    }
+
+    public GroupHelper returnToGroupsPage() {
+        click(RETURN_TO_GROUPS_LINK_XPATH);
+        return this;
     }
 
     private String getCurrentName() {
@@ -89,13 +138,5 @@ public class GroupHelper extends BaseHelper {
         return driver.findElement(GROUP_FOOTER_INPUT).getText();
     }
 
-    public GroupData checkNullValue(GroupData testGroup) {
-        GroupData group = new GroupData();
-        if (testGroup.getName() == null) {
-            group.setName(getCurrentName());
-        } else {
-            group.setName(testGroup.getName());
-        }
-        return group;
-    }
+
 }

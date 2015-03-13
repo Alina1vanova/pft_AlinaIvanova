@@ -1,93 +1,58 @@
 package pft.tests;
 
-import static org.testng.Assert.assertEquals;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 import pft.data.GroupData;
 import pft.data.GroupTestData;
 import pft.helper.GroupHelper;
-import pft.helper.NavigationHelper;
 import org.testng.annotations.Test;
+import pft.utils.SortedListOf;
 
-import java.util.*;
 
 public class GroupsTest extends TestBase {
 
+
     @Test(dataProvider = "randomValidGroupData", dataProviderClass = GroupTestData.class)
     public void groupCreationWithValidDataTest(GroupData group) {
-        NavigationHelper navigationHelper = app.getNavigationHelper();
-        navigationHelper.openMainPage();
-        navigationHelper.openGroups();
         GroupHelper groupHelper = app.getGroupHelper();
+        SortedListOf<GroupData> oldList = groupHelper.getGroups();
 
-        List<GroupData> oldList = groupHelper.getGroups();
+        GroupData newGroup = groupHelper.createGroup(group);
 
-        groupHelper
-                .initGroupCreation()
-                .fillGroupForm(group);
+        SortedListOf<GroupData> newList = groupHelper.getGroups();
+        assertThat(newList, equalTo(oldList.withAdded(newGroup)));
 
-        GroupData newGroup = groupHelper.checkNullValue(group);
-
-        groupHelper
-                .submitGroupCreation()
-                .returnToGroupsPage();
-
-        oldList.add(newGroup);
-
-        List<GroupData> newList = groupHelper.getGroups();
-        Collections.sort(oldList);
-
-        assertEquals(newList, oldList);
     }
 
     @Test
     public void deleteGroupTest() {
-        NavigationHelper navigationHelper = app.getNavigationHelper();
-        navigationHelper.openMainPage();
-        navigationHelper.openGroups();
         GroupHelper groupHelper = app.getGroupHelper();
-
-        List<GroupData> oldList = groupHelper.getGroups();
-        if (oldList.size() > 0) {
+        SortedListOf<GroupData> oldList = groupHelper.getGroups();
+        if (!oldList.isEmpty()) {
             int index = groupHelper.randomIndex(oldList.size());
-            groupHelper
-                    .deleteGroup(index)
-                    .returnToGroupsPage();
-            oldList.remove(index);
+
+            groupHelper.deleteGroup(index);
+
+            SortedListOf<GroupData> newList = groupHelper.getGroups();
+            assertThat(newList, equalTo(oldList.without(index)));
+
         }
-
-        List<GroupData> newList = groupHelper.getGroups();
-        Collections.sort(oldList);
-
-        assertEquals(newList, oldList);
     }
 
     @Test(dataProvider = "randomValidGroupData", dataProviderClass = GroupTestData.class)
     public void modifyGroupTest(GroupData group) {
-        NavigationHelper navigationHelper = app.getNavigationHelper();
-        navigationHelper.openMainPage();
-        navigationHelper.openGroups();
         GroupHelper groupHelper = app.getGroupHelper();
-
-        List<GroupData> oldList = groupHelper.getGroups();
-        System.out.println();
-        if (oldList.size() > 0) {
+        SortedListOf<GroupData> oldList = groupHelper.getGroups();
+        if (!oldList.isEmpty()) {
             int index = groupHelper.randomIndex(oldList.size());
-            groupHelper
-                    .initGroupModify(index)
-                    .fillGroupForm(group);
 
-            GroupData newGroup = groupHelper.checkNullValue(group);
+            GroupData newGroup = groupHelper.modifyGroup(index, group);
 
-            groupHelper
-                    .submitGroupModification()
-                    .returnToGroupsPage();
-
-            oldList.remove(index);
-            oldList.add(newGroup);
+            SortedListOf<GroupData> newList = groupHelper.getGroups();
+            assertThat(newList, equalTo(oldList.without(index).withAdded(newGroup)));
         }
-        List<GroupData> newList = groupHelper.getGroups();
-        Collections.sort(oldList);
 
-        assertEquals(newList, oldList);
     }
 }

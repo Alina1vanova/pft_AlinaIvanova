@@ -1,91 +1,63 @@
 package pft.tests;
 
-import org.testng.annotations.DataProvider;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pft.data.ContactData;
 import pft.data.ContactTestData;
-import pft.helper.NavigationHelper;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static pft.helper.ContactHelper.CREATION;
+import static pft.helper.ContactHelper.MODIFICATION;
+
 import pft.helper.ContactHelper;
+import pft.utils.SortedListOf;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by linka on 20.02.2015.
  */
 public class ContactTest extends TestBase {
 
-    List<String> groups = new ArrayList<String>();
-
     @Test(dataProvider = "randomValidContactData", dataProviderClass = ContactTestData.class)
     public void createContactTest(ContactData contact) {
-        NavigationHelper navigationHelper = app.getNavigationHelper();
         ContactHelper contactHelper = app.getContactHelper();
-        navigationHelper.openMainPage();
+        SortedListOf<ContactData> oldList = contactHelper.getContacts();
 
-        List<ContactData> oldList = contactHelper.getContacts();
+        ContactData newContact = contactHelper.createContact(contact, CREATION);
 
-        navigationHelper.openAddNewContact();
-        contactHelper.fillContactForm(contact);
-        ContactData newContact = contactHelper.checkNullValue(contact);
-        contactHelper.submitContactCreation();
-        contactHelper.returnToHomePage();
-
-        List<ContactData> newList = contactHelper.getContacts();
-        oldList.add(newContact);
-        Collections.sort(oldList);
-
-        assertEquals(newList, oldList);
+        SortedListOf<ContactData> newList = contactHelper.getContacts();
+        assertThat(newList, equalTo(oldList.withAdded(newContact)));
     }
 
     @Test(dataProvider = "randomValidContactData", dataProviderClass = ContactTestData.class)
     public void modifyContactTest(ContactData contact) {
-        NavigationHelper navigationHelper = app.getNavigationHelper();
         ContactHelper contactHelper = app.getContactHelper();
-        navigationHelper.openMainPage();
+        SortedListOf<ContactData> oldList = contactHelper.getContacts();
 
-        List<ContactData> oldList = contactHelper.getContacts();
-        if (oldList.size() > 0) {
+        if (!oldList.isEmpty()) {
             int index = contactHelper.randomIndex(oldList.size());
-            contactHelper.initContactModify(index);
-            contactHelper.fillContactForm(contact);
-            ContactData newContact = contactHelper.checkNullValue(contact);
-            contactHelper.submitContactModify();
-            contactHelper.returnToHomePage();
-            oldList.remove(index - 1);
-            oldList.add(newContact);
-        }
-        List<ContactData> newList = contactHelper.getContacts();
-        Collections.sort(oldList);
 
-        assertEquals(newList, oldList);
+            ContactData newContact = contactHelper.modifyContact(contact, index, MODIFICATION);
+
+            SortedListOf<ContactData> newList = contactHelper.getContacts();
+            assertThat(newList, equalTo(oldList.without(index - 1).withAdded(newContact)));
+        }
     }
 
     @Test
     public void deleteContactTest() {
-        NavigationHelper navigationHelper = app.getNavigationHelper();
-        navigationHelper.openMainPage();
         ContactHelper contactHelper = app.getContactHelper();
+        SortedListOf<ContactData> oldList = contactHelper.getContacts();
 
-        List<ContactData> oldList = contactHelper.getContacts();
-
-        if (oldList.size() > 0) {
+        if (!oldList.isEmpty()) {
             int index = contactHelper.randomIndex(oldList.size());
-            System.out.println(oldList.size() + " size");
-            contactHelper.initContactModify(index);
-            contactHelper.submitContactDelete();
-            contactHelper.returnToHomePage();
-            oldList.remove(index - 1);
+
+            contactHelper.deleteContact(index);
+
+            SortedListOf<ContactData> newList = contactHelper.getContacts();
+            assertThat(newList, equalTo(oldList.without(index - 1)));
         }
-        List<ContactData> newList = contactHelper.getContacts();
-        Collections.sort(oldList);
-
-        assertEquals(newList, oldList);
     }
-
 
 }

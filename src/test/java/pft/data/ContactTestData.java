@@ -1,45 +1,41 @@
 package pft.data;
 
 import org.testng.annotations.DataProvider;
+import pft.helper.GroupHelper;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static pft.config.Constants.*;
 
 /**
  * Created by linka on 27.02.2015.
  */
 public class ContactTestData {
 
-
     @DataProvider(name = "randomValidContactData")
     private static Iterator<Object[]> randomValidContactData() throws ParseException {
         List<Object[]> list = new ArrayList<Object[]>();
         for (int i = 0; i < 3; i++) {
-            ContactData contact = new ContactData();
-            contact.firstname = generateRandomString();
-            contact.lastname = generateRandomString();
-            contact.address = generateRandomString() + " " + generateRandomNumber(1000);
-            contact.home = generateRandomNumber(Integer.MAX_VALUE);
-            contact.mobile = generateRandomNumber(Integer.MAX_VALUE);
-            contact.work = generateRandomNumber(Integer.MAX_VALUE);
-            contact.email = generateRandomString();
-            contact.email2 = generateRandomString();
             Calendar randomDate = generateDate();
-            contact.bday = randomDate.get(Calendar.DAY_OF_MONTH);
-            contact.bmonth = randomDate.get(Calendar.MONTH) + 1;
-            contact.year = randomDate.get(Calendar.YEAR);
-            contact.address2 = generateRandomString();
-            contact.phone2 = generateRandomNumber(Integer.MAX_VALUE);
+            ContactData contact = new ContactData()
+                    .withFirstname(generateRandomString())
+                    .withLastname(generateRandomString())
+                    .withAddress(generateRandomString() + " " + generateRandomNumber(1000))
+                    .withHome(generateRandomNumber(Integer.MAX_VALUE))
+                    .withMobile(generateRandomNumber(Integer.MAX_VALUE))
+                    .withWork(generateRandomNumber(Integer.MAX_VALUE))
+                    .withEmail(generateRandomString())
+                    .withEmail2(generateRandomString())
+                    .withBday(randomDate.get(Calendar.DAY_OF_MONTH))
+                    .withBmonth(randomDate.get(Calendar.MONTH) + 1)
+                    .withYear(randomDate.get(Calendar.YEAR))
+                    .withAddress2(generateRandomString())
+                    .withPhone2(generateRandomNumber(Integer.MAX_VALUE));
 
             list.add(new Object[]{contact});
         }
         return list.iterator();
     }
-
 
     private static String generateRandomString() {
         Random rnd = new Random();
@@ -62,11 +58,6 @@ public class ContactTestData {
         }
     }
 
-    private static int generateRandomMonth(int boundary) {
-        Random rnd = new Random();
-        return rnd.nextInt(boundary);
-    }
-
     private static String generateRandomNumber(int boundary) {
         Random rnd = new Random();
         int randomNumber = rnd.nextInt(5);
@@ -77,7 +68,6 @@ public class ContactTestData {
         } else {
             return Integer.toString(rnd.nextInt(boundary) + 1);
         }
-
     }
 
     public static Calendar generateDate() throws ParseException {

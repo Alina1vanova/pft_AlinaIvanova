@@ -27,6 +27,8 @@ public interface ContactPageLocators {
     By NUMBER_OF_CONTACTS = new By.ByXPath("//*[@id='search_count']");
     By SELECT_MONTH = new By.ByXPath(".//select[2]/");
     By CONTACT_TABLE_ROWS = new By.ByXPath("//tr[@name='entry']");
+    By GROUP_SELECT_XPATH = new By.ByXPath("//select[@name='new_group']");
+    By GROUPS = new By.ByXPath("//select[3]/option");
     String CONTACT_TABLE_ROW = "//tr";
     String CONTACT_CHECKBOX_XPATH = "//input[@name='selected[]']";
     String CONTACT_EDIT_BUTTON_XPATH = "//img[@title='Edit']";

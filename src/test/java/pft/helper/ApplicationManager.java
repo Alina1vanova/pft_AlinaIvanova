@@ -3,7 +3,7 @@ package pft.helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-
+import static pft.config.Constants.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,6 +21,7 @@ public class ApplicationManager {
         FirefoxProfile profile = new FirefoxProfile();
         driver = new FirefoxDriver(profile);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.get(MAIN_PAGE_URL);
     }
 
     public void stop() {
@@ -41,7 +42,7 @@ public class ApplicationManager {
         return groupHelper;
     }
 
-    public NavigationHelper getNavigationHelper() {
+    public NavigationHelper navigateTo() {
         if (navigationHelper == null){
             navigationHelper = new NavigationHelper(this);
         }
