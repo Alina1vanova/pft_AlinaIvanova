@@ -121,7 +121,7 @@ public class ContactHelper extends BaseHelper {
                     .withFirstname(row.findElement(By.xpath(".//td[2]")).getText())
                     .withLastname(row.findElement(By.xpath(".//td[3]")).getText())
                     .withEmail(row.findElement(By.xpath(".//td[4]")).getText())
-                    .withHome(row.findElement(By.xpath(".//td[5]")).getText());
+                    .withTelephone(row.findElement(By.xpath(".//td[5]")).getText());
             cachedContacts.add(contact);
         }
     }

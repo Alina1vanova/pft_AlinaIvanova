@@ -3,7 +3,9 @@ package pft.helper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+
 import static pft.config.Constants.*;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,6 +18,7 @@ public class ApplicationManager {
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
     private ContactHelper contactHelper;
+    private PrintPhonesHelper printPhonesHelper;
 
     public ApplicationManager() {
         FirefoxProfile profile = new FirefoxProfile();
@@ -29,21 +32,28 @@ public class ApplicationManager {
     }
 
     public ContactHelper getContactHelper() {
-        if (contactHelper == null){
+        if (contactHelper == null) {
             contactHelper = new ContactHelper(this);
         }
         return contactHelper;
     }
 
     public GroupHelper getGroupHelper() {
-        if (groupHelper == null){
+        if (groupHelper == null) {
             groupHelper = new GroupHelper(this);
         }
         return groupHelper;
     }
 
+    public PrintPhonesHelper getPrintPhonesHelper() {
+        if (printPhonesHelper == null) {
+            printPhonesHelper = new PrintPhonesHelper(this);
+        }
+        return printPhonesHelper;
+    }
+
     public NavigationHelper navigateTo() {
-        if (navigationHelper == null){
+        if (navigationHelper == null) {
             navigationHelper = new NavigationHelper(this);
         }
         return navigationHelper;

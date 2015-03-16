@@ -1,7 +1,6 @@
 package pft.data;
 
 import org.testng.annotations.DataProvider;
-import pft.helper.GroupHelper;
 
 import java.text.ParseException;
 import java.util.*;
@@ -21,7 +20,7 @@ public class ContactTestData {
                     .withFirstname(generateRandomString())
                     .withLastname(generateRandomString())
                     .withAddress(generateRandomString() + " " + generateRandomNumber(1000))
-                    .withHome(generateRandomNumber(Integer.MAX_VALUE))
+                    .withTelephone(generateRandomNumber(Integer.MAX_VALUE))
                     .withMobile(generateRandomNumber(Integer.MAX_VALUE))
                     .withWork(generateRandomNumber(Integer.MAX_VALUE))
                     .withEmail(generateRandomString())
