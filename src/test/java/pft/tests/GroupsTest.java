@@ -1,20 +1,32 @@
 package pft.tests;
 
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import pft.data.GroupData;
 import pft.data.GroupTestData;
 import pft.helper.GroupHelper;
-import org.testng.annotations.Test;
 import pft.utils.SortedListOf;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static pft.data.GroupDataGenerator.loadGroupsFromCsvFile;
+import static pft.data.GroupDataGenerator.loadGroupsFromXmlFile;
 
 
 public class GroupsTest extends TestBase {
+    @DataProvider
+    public Iterator<Object[]> groupsFromFile() throws IOException {
+        return wrapGroupsDataProvider(loadGroupsFromXmlFile(new File("groups.txt"))).iterator();
+    }
 
 
-    @Test(dataProvider = "randomValidGroupData", dataProviderClass = GroupTestData.class)
+    @Test(dataProvider = "groupsFromFile")
     public void groupCreationWithValidDataTest(GroupData group) {
         GroupHelper groupHelper = app.getGroupHelper();
         SortedListOf<GroupData> oldList = groupHelper.getGroups();

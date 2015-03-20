@@ -1,11 +1,13 @@
 package pft.data;
 
 import org.testng.annotations.DataProvider;
+import pft.tests.TestBase;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+
+import static pft.data.GroupDataGenerator.generateRandomGroups;
 
 /**
  * Created by linka on 27.02.2015.
@@ -13,28 +15,7 @@ import java.util.Random;
 public class GroupTestData {
     @DataProvider(name = "randomValidGroupData")
     private static Iterator<Object[]> randomValidGroupData() {
-        List<Object[]> list = new ArrayList<Object[]>();
-        for (int i = 0; i < 3; i++) {
-            GroupData group = new GroupData()
-                    .withName(generateRandomString())
-                    .withHeader(generateRandomString())
-                    .withFooter(generateRandomString());
-
-            list.add(new Object[]{group});
-        }
-        return list.iterator();
-    }
-
-    private static String generateRandomString() {
-        Random rnd = new Random();
-
-        if (rnd.nextInt(5) == 0) {
-            return "";
-        } else if (rnd.nextInt(5) == 1) {
-            return null;
-        } else {
-            return "test" + rnd.nextInt();
-        }
+        return TestBase.wrapGroupsDataProvider(generateRandomGroups(3)).iterator();
     }
 
 
