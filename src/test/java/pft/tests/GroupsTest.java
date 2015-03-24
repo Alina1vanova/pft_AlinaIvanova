@@ -20,6 +20,7 @@ import static pft.data.GroupDataGenerator.loadGroupsFromXmlFile;
 
 
 public class GroupsTest extends TestBase {
+
     @DataProvider
     public Iterator<Object[]> groupsFromFile() throws IOException {
         return wrapGroupsDataProvider(loadGroupsFromXmlFile(new File("groups.txt"))).iterator();
