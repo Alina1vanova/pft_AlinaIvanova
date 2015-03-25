@@ -1,5 +1,6 @@
 package pft.tests;
 
+import pft.data.ContactData;
 import pft.data.GroupData;
 import pft.helper.ApplicationManager;
 import org.testng.annotations.AfterSuite;
@@ -22,10 +23,18 @@ public class TestBase {
     public void tearDown() {
         app.stop();
     }
+
     public static List<Object[]> wrapGroupsDataProvider(List<GroupData> groups) {
         List<Object[]> list = new ArrayList<Object[]>();
         for (GroupData group : groups) {
             list.add(new Object[]{group});
+        }
+        return list;
+    }
+    public static List<Object[]> wrapContactsDataProvider(List<ContactData> contacts) {
+        List<Object[]> list = new ArrayList<Object[]>();
+        for (ContactData contact : contacts) {
+            list.add(new Object[]{contact});
         }
         return list;
     }
