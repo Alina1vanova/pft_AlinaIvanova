@@ -37,7 +37,7 @@ public class GroupDataGenerator {
 
     private static void saveGroupsToXmlFile(List<GroupData> groups, File file) throws IOException {
         XStream xStream = new XStream();
-        xStream.alias("group",GroupData.class);
+        xStream.alias("group", GroupData.class);
         String xml = xStream.toXML(groups);
         FileWriter writer = new FileWriter(file);
         writer.write(xml);
@@ -45,16 +45,17 @@ public class GroupDataGenerator {
     }
 
     public static List<GroupData> loadGroupsFromXmlFile(File file) throws IOException {
+        InputStream inputStream = new FileInputStream(file);
         XStream xStream = new XStream();
-        xStream.alias("group",GroupData.class);
-        return  (List<GroupData>)xStream.fromXML(file);
+        xStream.alias("group", GroupData.class);
+        return (List<GroupData>) xStream.fromXML(inputStream);
 
     }
 
     private static void saveGroupsToCsvFile(List<GroupData> groups, File file) throws IOException {
         FileWriter writer = new FileWriter(file);
         for (GroupData group : groups) {
-            writer.write(group.getName() + "," + group.getHeader() + "," + group.getFooter() + ",!"+"\n");
+            writer.write(group.getName() + "," + group.getHeader() + "," + group.getFooter() + ",!" + "\n");
         }
         writer.close();
     }
