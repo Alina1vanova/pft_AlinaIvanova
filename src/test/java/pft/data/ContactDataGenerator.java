@@ -56,7 +56,19 @@ public class ContactDataGenerator {
     private static void saveContactsToCsvFile(List<ContactData> contacts, File file) throws IOException {
         FileWriter writer = new FileWriter(file);
         for (ContactData contact : contacts) {
-            writer.write(contact.getFirstname() + "," + contact.getLastname() + ",!" + "\n");
+            writer.write(contact.getFirstname() + "," +
+                    contact.getLastname() + "," +
+                    contact.getAddress() + "," +
+                    contact.getTelephone() + "," +
+                    contact.getMobile() + "," +
+                    contact.getWork() + "," +
+                    contact.getEmail() + "," +
+                    contact.getEmail2() + "," +
+                    contact.getBday() + "," +
+                    contact.getBmonth() + "," +
+                    contact.getYear() + "," +
+                    contact.getAddress2() + "," +
+                    contact.getPhone2() + ",!" + "\n");
         }
         writer.close();
     }

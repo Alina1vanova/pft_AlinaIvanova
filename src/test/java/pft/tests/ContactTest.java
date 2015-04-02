@@ -8,6 +8,7 @@ import pft.data.ContactTestData;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static pft.data.ContactDataGenerator.loadContactsFromCsvFile;
 import static pft.data.ContactDataGenerator.loadContactsFromXmlFile;
 import static pft.helper.ContactHelper.CREATION;
 import static pft.helper.ContactHelper.MODIFICATION;
@@ -27,7 +28,8 @@ public class ContactTest extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> contactsFromFile() throws IOException {
-        return wrapContactsDataProvider(loadContactsFromXmlFile(new File("contacts.xml"))).iterator();
+        return wrapContactsDataProvider(loadContactsFromCsvFile(new File("contacts.txt"))).iterator();
+        //return wrapContactsDataProvider(loadContactsFromXmlFile(new File("contacts.xml"))).iterator();
     }
 
     @Test(dataProvider = "contactsFromFile")

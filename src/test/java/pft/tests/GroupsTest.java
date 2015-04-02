@@ -23,9 +23,9 @@ public class GroupsTest extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> groupsFromFile() throws IOException {
-        return wrapGroupsDataProvider(loadGroupsFromXmlFile(new File("groups.xml"))).iterator();
+        return wrapGroupsDataProvider(loadGroupsFromCsvFile(new File("groups.txt"))).iterator();
+        // return wrapGroupsDataProvider(loadGroupsFromXmlFile(new File("groups.xml"))).iterator();
     }
-
 
     @Test(dataProvider = "groupsFromFile")
     public void groupCreationWithValidDataTest(GroupData group) {
@@ -36,7 +36,6 @@ public class GroupsTest extends TestBase {
 
         SortedListOf<GroupData> newList = groupHelper.getGroups();
         assertThat(newList, equalTo(oldList.withAdded(newGroup)));
-
     }
 
     @Test
