@@ -9,7 +9,7 @@ import pft.utils.SortedListOf;
 import java.util.List;
 import java.util.Random;
 
-public class GroupHelper extends BaseHelper {
+public class GroupHelper extends WebDriverBaseHelper {
 
     private SortedListOf<GroupData> cachedGroups;
 

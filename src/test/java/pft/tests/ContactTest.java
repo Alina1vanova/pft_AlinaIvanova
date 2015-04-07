@@ -9,7 +9,6 @@ import pft.data.ContactTestData;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static pft.data.ContactDataGenerator.loadContactsFromCsvFile;
-import static pft.data.ContactDataGenerator.loadContactsFromXmlFile;
 import static pft.helper.ContactHelper.CREATION;
 import static pft.helper.ContactHelper.MODIFICATION;
 

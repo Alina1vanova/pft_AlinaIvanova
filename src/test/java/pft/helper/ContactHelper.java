@@ -15,7 +15,7 @@ import java.util.Random;
 /**
  * Created by linka on 20.02.2015.
  */
-public class ContactHelper extends BaseHelper {
+public class ContactHelper extends WebDriverBaseHelper {
 
     public static boolean CREATION = true;
     public static boolean MODIFICATION = false;

@@ -4,7 +4,7 @@ import static pft.config.GroupsPageLocators.*;
 import static pft.config.HomePageLocators.*;
 
 
-public class NavigationHelper extends BaseHelper {
+public class NavigationHelper extends WebDriverBaseHelper {
 
     public NavigationHelper(ApplicationManager manager) {
         super(manager);

@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import pft.data.GroupData;
 import pft.data.GroupTestData;
 import pft.helper.GroupHelper;
+import pft.helper.HibernateHelper;
 import pft.utils.SortedListOf;
 
 import java.io.File;
@@ -15,7 +16,6 @@ import java.util.Iterator;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static pft.data.GroupDataGenerator.loadGroupsFromCsvFile;
-import static pft.data.GroupDataGenerator.loadGroupsFromXmlFile;
 
 
 public class GroupsTest extends TestBase {
@@ -29,7 +29,8 @@ public class GroupsTest extends TestBase {
     @Test(dataProvider = "groupsFromFile")
     public void groupCreationWithValidDataTest(GroupData group) {
         GroupHelper groupHelper = app.getGroupHelper();
-        SortedListOf<GroupData> oldList = groupHelper.getGroups();
+        HibernateHelper hibernateHelper = app.getHibernateHelper();
+        SortedListOf<GroupData> oldList = hibernateHelper.listGroups();
 
         GroupData newGroup = groupHelper.createGroup(group);
 

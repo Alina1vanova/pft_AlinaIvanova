@@ -13,29 +13,17 @@ import java.util.Properties;
  */
 
 public class ApplicationManager {
-    public WebDriver driver;
+    private WebDriver driver;
 
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
     private ContactHelper contactHelper;
     private PrintPhonesHelper printPhonesHelper;
+    private HibernateHelper hibernateHelper;
     private Properties properties;
 
     public ApplicationManager(Properties properties) {
         this.properties = properties;
-        String browser = properties.getProperty("browser");
-        if ("firefox".equals(browser)) {
-            FirefoxProfile profile = new FirefoxProfile();
-            driver = new FirefoxDriver(profile);
-        }
-        // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        else if ("chrome".equals(browser)) {
-            // System.setProperty("webdriver.chrome.driver", "D:\\BrowserDrivers\\chromedriver.exe");
-            driver = new ChromeDriver();
-        } else {
-            throw new Error("Unsupported browser: " + browser);
-        }
-        driver.get(properties.getProperty("baseURL"));
     }
 
     public void stop() {
@@ -56,6 +44,13 @@ public class ApplicationManager {
         return groupHelper;
     }
 
+    public HibernateHelper getHibernateHelper() {
+        if (hibernateHelper == null) {
+            hibernateHelper = new HibernateHelper(this);
+        }
+        return hibernateHelper;
+    }
+
     public PrintPhonesHelper getPrintPhonesHelper() {
         if (printPhonesHelper == null) {
             printPhonesHelper = new PrintPhonesHelper(this);
@@ -68,6 +63,25 @@ public class ApplicationManager {
             navigationHelper = new NavigationHelper(this);
         }
         return navigationHelper;
+    }
+
+    public WebDriver getDriver() {
+        if (driver == null) {
+            String browser = properties.getProperty("browser");
+            if ("firefox".equals(browser)) {
+                //  FirefoxProfile profile = new FirefoxProfile();
+                driver = new FirefoxDriver();
+            }
+            // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            else if ("chrome".equals(browser)) {
+                //System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+                driver = new ChromeDriver();
+            } else {
+                throw new Error("Unsupported browser: " + browser);
+            }
+            driver.get(properties.getProperty("baseURL"));
+        }
+        return driver;
     }
 }
 

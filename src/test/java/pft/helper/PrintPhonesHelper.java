@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by linka on 16.03.2015.
  */
-public class PrintPhonesHelper extends BaseHelper {
+public class PrintPhonesHelper extends WebDriverBaseHelper {
 
     public PrintPhonesHelper(ApplicationManager manager) {
         super(manager);
