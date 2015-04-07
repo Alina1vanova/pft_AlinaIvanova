@@ -5,6 +5,7 @@
         <classes>
             <class name="pft.tests.ContactTest"/>
             <class name="pft.tests.GroupsTest"/>
+            <class name="pft.tests.PrintPhonesTest"/>
         </classes>
     </test>
 </suite>

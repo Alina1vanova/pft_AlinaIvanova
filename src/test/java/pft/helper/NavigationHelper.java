@@ -2,7 +2,7 @@ package pft.helper;
 
 import static pft.config.GroupsPageLocators.*;
 import static pft.config.HomePageLocators.*;
-import static pft.config.Constants.*;
+
 
 public class NavigationHelper extends BaseHelper {
 

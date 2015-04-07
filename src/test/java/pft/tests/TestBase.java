@@ -6,17 +6,22 @@ import pft.helper.ApplicationManager;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class TestBase {
 
     protected static ApplicationManager app;
 
     @BeforeSuite
-    public void setUp() {
-        app = new ApplicationManager();
-
+    public void setUp() throws Exception {
+        String configFile = System.getProperty("configFile", "application.properties");
+        Properties properties = new Properties();
+        properties.load(new FileReader(new File(configFile)));
+        app = new ApplicationManager(properties);
     }
 
     @AfterSuite
@@ -31,6 +36,7 @@ public class TestBase {
         }
         return list;
     }
+
     public static List<Object[]> wrapContactsDataProvider(List<ContactData> contacts) {
         List<Object[]> list = new ArrayList<Object[]>();
         for (ContactData contact : contacts) {
