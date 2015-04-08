@@ -74,7 +74,7 @@ public class ApplicationManager {
             }
             // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             else if ("chrome".equals(browser)) {
-                //System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "D:\\BrowserDrivers\\chromedriver.exe");
                 driver = new ChromeDriver();
             } else {
                 throw new Error("Unsupported browser: " + browser);
