@@ -59,7 +59,7 @@ public class ContactDataGenerator {
             writer.write(contact.getFirstname() + "," +
                     contact.getLastname() + "," +
                     contact.getAddress() + "," +
-                    contact.getTelephone() + "," +
+                    contact.getHome() + "," +
                     contact.getMobile() + "," +
                     contact.getWork() + "," +
                     contact.getEmail() + "," +
@@ -83,14 +83,14 @@ public class ContactDataGenerator {
             ContactData contact = new ContactData().withFirstname(part[0])
                     .withLastname(part[1])
                     .withAddress(part[2])
-                    .withTelephone(part[3])
+                    .withHome(part[3])
                     .withMobile(part[4])
                     .withWork(part[5])
                     .withEmail(part[6])
                     .withEmail2(part[7])
                     .withBday(Integer.parseInt(part[8]))
-                    .withBmonth(Integer.parseInt(part[9]))
-                    .withYear(Integer.parseInt(part[10]))
+                    .withBmonth(part[9])
+                    .withYear(part[10])
                     .withAddress2(part[11])
                     .withPhone2(part[12]);
             list.add(contact);
@@ -108,14 +108,14 @@ public class ContactDataGenerator {
                     .withFirstname(generateRandomString())
                     .withLastname(generateRandomString())
                     .withAddress(generateRandomString() + " " + generateRandomNumber(1000))
-                    .withTelephone(generateRandomNumber(Integer.MAX_VALUE))
+                    .withHome(generateRandomNumber(Integer.MAX_VALUE))
                     .withMobile(generateRandomNumber(Integer.MAX_VALUE))
                     .withWork(generateRandomNumber(Integer.MAX_VALUE))
                     .withEmail(generateRandomString())
                     .withEmail2(generateRandomString())
                     .withBday(randomDate.get(Calendar.DAY_OF_MONTH))
-                    .withBmonth(randomDate.get(Calendar.MONTH) + 1)
-                    .withYear(randomDate.get(Calendar.YEAR))
+                    .withBmonth(Integer.toString(randomDate.get(Calendar.MONTH) + 1))
+                    .withYear(Integer.toString(randomDate.get(Calendar.YEAR)))
                     .withAddress2(generateRandomString())
                     .withPhone2(generateRandomNumber(Integer.MAX_VALUE));
             list.add(contact);

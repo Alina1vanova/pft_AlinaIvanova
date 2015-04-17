@@ -15,7 +15,7 @@ public class PrintPhonesTest extends TestBase {
 
     @Test
     public void printPhones() {
-        SortedListOf<ContactData> contactList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> contactList = app.getContactHelper().getUIContacts();
         SortedListOf<ContactData> printedPhones = app.getPrintPhonesHelper().getPrintedPhones();
 
         assertThat(contactList.size(), equalTo(printedPhones.size()));
@@ -23,7 +23,7 @@ public class PrintPhonesTest extends TestBase {
 
         for (int i = 0; i < contactList.size(); i++) {
             assertThat(contactList.get(i).getLastname(), equalTo(printedPhones.get(i).getLastname()));
-            assertThat(contactList.get(i).getTelephone(), equalTo(printedPhones.get(i).getTelephone().replace(" ","")));
+            assertThat(contactList.get(i).getHome(), equalTo(printedPhones.get(i).getHome().replace(" ","")));
         }
     }
 

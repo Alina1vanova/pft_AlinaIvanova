@@ -40,7 +40,7 @@ public class PrintPhonesHelper extends WebDriverBaseHelper {
             ContactData contact = new ContactData()
                     .withFirstname(findNames(cell).get("firstname"))
                     .withLastname(findNames(cell).get("lastname"))
-                    .withTelephone(findTelephone(cell));
+                    .withHome(findTelephone(cell));
             contacts.add(contact);
         }
         return contacts;

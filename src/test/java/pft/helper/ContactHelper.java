@@ -19,7 +19,7 @@ public class ContactHelper extends WebDriverBaseHelper {
 
     public static boolean CREATION = true;
     public static boolean MODIFICATION = false;
-
+    public static boolean CONTACTS_EQUAL = false;
     public ContactHelper(ApplicationManager manager) {
         super(manager);
     }
@@ -31,19 +31,30 @@ public class ContactHelper extends WebDriverBaseHelper {
         ContactData newContact = checkNullValue(contact);
         submitContactCreation();
         returnToHomePage();
-        rebuildCache();
+        manager.getModel().addContact(newContact);
         return newContact;
     }
 
-    public ContactData modifyContact(ContactData contact, int index, boolean formType) {
+    public ContactData modifyContact(ContactData contact, int index, boolean formType, ContactData contactFromDB) {
+        CONTACTS_EQUAL = false;
         manager.navigateTo().mainPage();
         initContactModify(index);
+        CONTACTS_EQUAL = compareContacts(contactFromDB);
         fillContactForm(contact, formType);
         ContactData newContact = checkNullValue(contact);
         submitContactModification();
         returnToHomePage();
-        rebuildCache();
+        manager.getModel().removeContact(index - 1).addContact(newContact);
         return newContact;
+    }
+
+    private boolean compareContacts(ContactData contactFromDB) {
+        if (!getCurrentFirstname().equals(contactFromDB.getFirstname()) ||
+                !getCurrentLastname().equals(contactFromDB.getLastname()) ||
+                !getCurrentHome().equals(contactFromDB.getHome()) ||
+                !getCurrentMobile().equals(contactFromDB.getMobile()))
+            return false;
+        else return true;
     }
 
     public void deleteContact(int index) {
@@ -51,10 +62,8 @@ public class ContactHelper extends WebDriverBaseHelper {
         initContactModify(index);
         submitContactDeletion();
         returnToHomePage();
-        rebuildCache();
+        manager.getModel().removeContact(index);
     }
-
-    private SortedListOf<ContactData> cachedContacts;
 
     private void initContactCreation() {
         click(ADD_NEW_LINK_XPATH);
@@ -70,10 +79,10 @@ public class ContactHelper extends WebDriverBaseHelper {
         enterText(EMAIL_INPUT, contactData.getEmail());
         enterText(EMAIL2_INPUT, contactData.getEmail2());
         selectByText(BDAY_SELECT_XPATH, Integer.toString(contactData.getBday()));
-        selectByIndex(BMONTH_SELECT_XPATH, contactData.getBmonth());
-        enterText(BYEAR_INPUT, Integer.toString(contactData.getYear()));
+        selectByIndex(BMONTH_SELECT_XPATH, Integer.parseInt(contactData.getBmonth()));
+        enterText(BYEAR_INPUT, contactData.getYear());
         if (formType == CREATION) {
-            selectByText(GROUP_SELECT_XPATH, "group 1");
+//            selectByText(GROUP_SELECT_XPATH, "group 1");
         } else {
             if (driver.findElements(GROUP_SELECT_XPATH).size() != 0) {
                 throw new Error("Group selector exists in contact modification form");
@@ -89,47 +98,38 @@ public class ContactHelper extends WebDriverBaseHelper {
 
     public void submitContactCreation() {
         click(SUBMIT_CONTACT_CREATION_BUTTON_XPATH);
-        cachedContacts = null;
     }
 
     public void submitContactModification() {
         click(SUBMIT_CONTACT_MODIFICATION_BUTTON_XPATH);
-        cachedContacts = null;
     }
 
     public void submitContactDeletion() {
         click(SUBMIT_CONTACT_DELETE_BUTTON_XPATH);
-        cachedContacts = null;
     }
 
     public void returnToHomePage() {
         click(RETURN_TO_HOME_LINK_XPATH);
     }
 
-    public SortedListOf<ContactData> getContacts() {
-        if (cachedContacts == null) {
-            rebuildCache();
-        }
-        return cachedContacts;
-    }
-
-    private void rebuildCache() {
-        cachedContacts = new SortedListOf<ContactData>();
+    public SortedListOf<ContactData> getUIContacts() {
+        SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
         List<WebElement> rows = getContactRows();
         for (WebElement row : rows) {
             ContactData contact = new ContactData()
                     .withFirstname(row.findElement(By.xpath(".//td[2]")).getText())
                     .withLastname(row.findElement(By.xpath(".//td[3]")).getText())
                     .withEmail(row.findElement(By.xpath(".//td[4]")).getText())
-                    .withTelephone(row.findElement(By.xpath(".//td[5]")).getText());
-            cachedContacts.add(contact);
+                    .withHome(row.findElement(By.xpath(".//td[5]")).getText());
+            contacts.add(contact);
         }
+        return contacts;
     }
 
     public ContactData checkNullValue(ContactData testContact) {
         ContactData contact = new ContactData();
         if (testContact.getFirstname() == null) {
-            contact.setFirstname(getCurrentFirstName());
+            contact.setFirstname(getCurrentFirstname());
         } else {
             contact.setFirstname(testContact.getFirstname());
         }
@@ -141,8 +141,20 @@ public class ContactHelper extends WebDriverBaseHelper {
         return Math.abs(rnd.nextInt(boundary) + 1);
     }
 
-    public String getCurrentFirstName() {
+    public String getCurrentFirstname() {
         return driver.findElement(FIRST_NAME_INPUT).getAttribute("value");
+    }
+
+    public String getCurrentLastname() {
+        return driver.findElement(LAST_NAME_INPUT).getAttribute("value");
+    }
+
+    public String getCurrentMobile() {
+        return driver.findElement(MOBILE_INPUT).getAttribute("value");
+    }
+
+    public String getCurrentHome() {
+        return driver.findElement(HOME_INPUT).getAttribute("value");
     }
 
     public List<WebElement> getContactRows() {

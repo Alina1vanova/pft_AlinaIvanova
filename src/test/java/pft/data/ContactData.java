@@ -1,6 +1,7 @@
 package pft.data;
 
 public class ContactData implements Comparable<ContactData> {
+    private int id;
     private String firstname;
     private String lastname;
     private String address;
@@ -10,11 +11,12 @@ public class ContactData implements Comparable<ContactData> {
     private String email;
     private String email2;
     private int bday;
-    private int bmonth;
-    private int year;
+    private String bmonth;
+    private String year;
     private String group;
     private String address2;
     private String phone2;
+
     private String telephone;
 
     public ContactData ContactData() {
@@ -25,6 +27,9 @@ public class ContactData implements Comparable<ContactData> {
     public String toString() {
         return "ContactData[" +
                 "firstname=" + firstname +
+                "lastname=" + lastname +
+                "mobile=" + mobile +
+                "home=" + home +
                 ']';
     }
 
@@ -75,8 +80,8 @@ public class ContactData implements Comparable<ContactData> {
         return this;
     }
 
-    public ContactData withTelephone(String telephone) {
-        this.telephone = telephone;
+    public ContactData withHome(String home) {
+        this.home = home;
         return this;
     }
 
@@ -101,12 +106,12 @@ public class ContactData implements Comparable<ContactData> {
         return this;
     }
 
-    public ContactData withBmonth(int bmonth) {
+    public ContactData withBmonth(String bmonth) {
         this.bmonth = bmonth;
         return this;
     }
 
-    public ContactData withYear(int year) {
+    public ContactData withYear(String year) {
         this.year = year;
         return this;
     }
@@ -124,6 +129,10 @@ public class ContactData implements Comparable<ContactData> {
     public ContactData withPhone2(String phone2) {
         this.phone2 = phone2;
         return this;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstname() {
@@ -162,11 +171,11 @@ public class ContactData implements Comparable<ContactData> {
         return bday;
     }
 
-    public int getBmonth() {
+    public String getBmonth() {
         return bmonth;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -184,5 +193,65 @@ public class ContactData implements Comparable<ContactData> {
 
     public String getTelephone() {
         return telephone;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEmail2(String email2) {
+        this.email2 = email2;
+    }
+
+    public void setBday(int bday) {
+        this.bday = bday;
+    }
+
+    public void setBmonth(String bmonth) {
+        this.bmonth = bmonth;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public void setPhone2(String phone2) {
+        this.phone2 = phone2;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 }

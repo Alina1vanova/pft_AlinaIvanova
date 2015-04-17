@@ -20,14 +20,27 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     private PrintPhonesHelper printPhonesHelper;
     private HibernateHelper hibernateHelper;
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
     private Properties properties;
+    private ApplicationModel model;
 
     public ApplicationManager(Properties properties) {
         this.properties = properties;
+        model = new ApplicationModel();
+        model.setGroups(getHibernateHelper().listGroups());
+        model.setContacts(getHibernateHelper().listContacts());
     }
 
     public void stop() {
         driver.quit();
+    }
+
+    public ApplicationModel getModel() {
+        return model;
     }
 
     public ContactHelper getContactHelper() {
@@ -74,7 +87,7 @@ public class ApplicationManager {
             }
             // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             else if ("chrome".equals(browser)) {
-                System.setProperty("webdriver.chrome.driver", "D:\\BrowserDrivers\\chromedriver.exe");
+                //  System.setProperty("webdriver.chrome.driver", "D:\\BrowserDrivers\\chromedriver.exe");
                 driver = new ChromeDriver();
             } else {
                 throw new Error("Unsupported browser: " + browser);

@@ -5,12 +5,12 @@ package pft.data;
  */
 public class GroupData implements Comparable<GroupData> {
 
-    private String id;
+    private int id;
     private String name;
     private String header;
     private String footer;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -71,7 +71,7 @@ public class GroupData implements Comparable<GroupData> {
         return this;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
