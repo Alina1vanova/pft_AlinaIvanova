@@ -78,6 +78,11 @@ public class ApplicationManager {
         return navigationHelper;
     }
 
+    public boolean getBooleanProperty(String property){
+        if ("yes".equals(getProperty(property)))
+            return true;
+        else return false;
+    }
     public WebDriver getDriver() {
         if (driver == null) {
             String browser = properties.getProperty("browser");

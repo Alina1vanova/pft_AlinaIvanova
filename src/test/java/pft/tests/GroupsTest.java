@@ -79,10 +79,10 @@ public class GroupsTest extends TestBase {
     }
 
     public void compareImplementationAndModel() {
-        if ("yes".equals(app.getProperty("check.db"))) {
+        if (app.getBooleanProperty("check.db")) {
             assertThat(app.getModel().getGroups(), equalTo(app.getHibernateHelper().listGroups()));
         }
-        if ("yes".equals(app.getProperty("check.ui"))) {
+        if (app.getBooleanProperty("check.ui")) {
             assertThat(app.getModel().getGroups(), equalTo(app.getGroupHelper().getUIGroups()));
         }
     }

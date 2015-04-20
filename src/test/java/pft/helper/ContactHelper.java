@@ -5,6 +5,7 @@ import static pft.config.HomePageLocators.ADD_NEW_LINK_XPATH;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import pft.data.ContactData;
 import pft.utils.SortedListOf;
 
@@ -20,6 +21,7 @@ public class ContactHelper extends WebDriverBaseHelper {
     public static boolean CREATION = true;
     public static boolean MODIFICATION = false;
     public static boolean CONTACTS_EQUAL = false;
+
     public ContactHelper(ApplicationManager manager) {
         super(manager);
     }
@@ -35,11 +37,11 @@ public class ContactHelper extends WebDriverBaseHelper {
         return newContact;
     }
 
-    public ContactData modifyContact(ContactData contact, int index, boolean formType, ContactData contactFromDB) {
+    public ContactData modifyContact(ContactData contact, int index, boolean formType) {
         CONTACTS_EQUAL = false;
         manager.navigateTo().mainPage();
         initContactModify(index);
-        CONTACTS_EQUAL = compareContacts(contactFromDB);
+        compareContacts(index);
         fillContactForm(contact, formType);
         ContactData newContact = checkNullValue(contact);
         submitContactModification();
@@ -48,13 +50,12 @@ public class ContactHelper extends WebDriverBaseHelper {
         return newContact;
     }
 
-    private boolean compareContacts(ContactData contactFromDB) {
-        if (!getCurrentFirstname().equals(contactFromDB.getFirstname()) ||
-                !getCurrentLastname().equals(contactFromDB.getLastname()) ||
-                !getCurrentHome().equals(contactFromDB.getHome()) ||
-                !getCurrentMobile().equals(contactFromDB.getMobile()))
-            return false;
-        else return true;
+    private void compareContacts(int index) {
+        ContactData contactFromDB = manager.getHibernateHelper().listContacts().get(index - 1);
+        Assert.assertEquals(getCurrentFirstname(), contactFromDB.getFirstname(), "UI firstname doesn't equal DB");
+        Assert.assertEquals(getCurrentLastname(), contactFromDB.getLastname(), "UI lastname doesn't equal DB");
+        Assert.assertEquals(getCurrentHome(), contactFromDB.getHome(), "UI home phone doesn't equal DB");
+        Assert.assertEquals(getCurrentMobile(), contactFromDB.getMobile(), "UI mobile phone doesn't equal DB");
     }
 
     public void deleteContact(int index) {

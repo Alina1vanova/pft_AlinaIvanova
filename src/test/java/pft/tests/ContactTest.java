@@ -14,7 +14,6 @@ import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static pft.data.ContactDataGenerator.loadContactsFromCsvFile;
 import static pft.helper.ContactHelper.*;
 
@@ -52,13 +51,10 @@ public class ContactTest extends TestBase {
 
         if (!oldList.isEmpty()) {
             int index = contactHelper.randomIndex(oldList.size());
-            ContactData newContact = contactHelper.modifyContact(contact, index, MODIFICATION, app.getHibernateHelper().listContacts().get(index - 1));
+            ContactData newContact = contactHelper.modifyContact(contact, index, MODIFICATION);
             SortedListOf<ContactData> newList = app.getModel().getContacts();
 
             assertThat(newList, equalTo(oldList.without(index - 1).withAdded(newContact)));
-            if (timeToCheck()) {
-                assertTrue(CONTACTS_EQUAL);
-            }
         }
     }
 
@@ -80,10 +76,10 @@ public class ContactTest extends TestBase {
     }
 
     public void compareImplementationAndModel() {
-        if ("yes".equals(app.getProperty("check.db"))) {
+        if (app.getBooleanProperty("check.db")) {
             assertThat(app.getModel().getContacts(), equalTo(app.getHibernateHelper().listContacts()));
         }
-        if ("yes".equals(app.getProperty("check.ui"))) {
+        if (app.getBooleanProperty("check.ui")) {
             assertThat(app.getModel().getContacts(), equalTo(app.getContactHelper().getUIContacts()));
         }
     }
